@@ -1,0 +1,5 @@
+/experiments/tensorboard
+/experiments/models
+/data
+
+*.txt
