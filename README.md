@@ -49,3 +49,36 @@ Also the following research papers are implemented in order to improve Q-Learnin
 ## How To Use
 
 #### Installation
+You can clone this repository by running the following command.
+```
+git clone --recurse-submodules <repository cloning URL>
+```
+#### Environment Setup
+First, we'll create a conda environment to hold the dependencies.
+```
+conda create --name RLpytorch python=3.8 -y
+source activate RLpytorch
+pip install -r requirements.txt
+```
+Then, since this project uses IPython notebooks, we'll install this conda environment as a kernel.
+```
+python -m ipykernel install --user --name RLpytorch --display-name "Python 3.8 (RLpytorch)"
+```
+
+#### Model Training
+Model | Command
+--- | --- 
+Double DQN | ```python train.py --model DoubleDQN```
+Prioritized Replay DQN | ```python train.py --model PrioritizedReplayDQN```
+
+You can optionally use ```--A``` and ```--S``` to set the number of possible states and actions in the world. The Training parameters ```--T``` (number of exploration steps), ```--lr``` (learning rate) and ```--K_freeze``` (update period of second weigths pair) can additionally be set. Specificly the Prioritized Replay variant allows you to set parameters from the research paper ```-N``` (size of the memory), ```--alpha``` (priority exponent), ```--beta``` (importance sampling exponent), ```--K``` (memory replay period) and ```--k``` (batchsize).
+
+#### Tensorboard
+The tensorboard can be called via the following command.
+```tensorboard --logdir "experiments/exp_<your experiment number>"```
+It contains the following evaluation metrics:
+- loss: measure of how similiar the 2 Q functions are to each other.
+- rewards: Average reward over the last 10 action-state pairs during exploration.
+- V: Average State-Value of the Agent, relative to optimal State-Value according to the optimal policy of the world.
+
+![tensorboard](tensorboard.png)
